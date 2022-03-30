@@ -9,25 +9,40 @@
   
 </head>
 <body>
- <div id="canvas"></div>
+ <canvas id="canvas" width="100" height="100"></canvas>
  <script>
-     canvas.onclick = (e) => {
-         console.log(e.clientX)//console.log调试大法
-         console.log(e.clientY)
-         let div = document.createElement('div')
-         //让文档创建一个标签div
-    div.style.position='absolute' //让div出现在X Y 的位置，所以用绝对定位
-    div.style.left = e.clientX + 'px'
-    div.style.top = e.clientY + 'px' 
-    div.style.backgroundColor = 'black'    
-    div.style.width = '6px'    
-    div.style.height = '6px'
-    div.style.marginLeft = '-3px'
-    div.style.marginTop = '-3px'
-    div.style.borderRadius = '50%'//变成圆形
-
-    canvas.appendChild(div)//让canvas添加一个孩子
+    let canvas = document.getElementById("canvas");
+   canvas.width = document.documentElement.clientWidth
+   canvas.height = document.documentElement.clientHeight
+    //通过id找到这个canvas
+    let ctx = canvas.getContext("2d");
+let painting = false
+ctx.fillStyle = "black";
+ctx.strokeStyle = 'none'
+//stroke 描边
+    
+canvas.onmousedown = () => {
+    painting = true
 }
+
+
+canvas.onmousemove = (e) => {
+    if (painting === true){
+        ctx.beginPath();
+        ctx.arc(e.clientX, e.clientY,10,0,2*Math.PI);
+        ctx.stroke();
+        ctx.fill();
+    }    else{
+       console.log('什么都不做')
+   }
+}
+canvas.onmouseup = ()=>{
+   painting = false
+}
+
+
+ 
+   
  </script> 
 </body>
 </html>
